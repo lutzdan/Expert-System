@@ -171,10 +171,8 @@ main :-
 
     new(BIniciar, button(iniciar,
         message(@prolog, abrir_preguntas))),
-    send(BIniciar, label, 'INICIAR EVALUACION'),
-    new(BSalir, button(salir,
+    new(BSalir, button('  SALIR  ',
         message(D, destroy))),
-    send(BSalir, label, 'SALIR'),
 
     send(D, append, T1),
     send(D, append, T2),
@@ -192,7 +190,8 @@ main :-
     send(D, append, Sep3),
     send(D, append, BIniciar),
     send(D, append, BSalir),
-    send(D, default_button, iniciar),
+    send(D, label, 'INICIAR EVALUACION'),
+    send(D, default_button, inciar),
     send(D, open, point(220, 130)).
 
 % ------------------------------------------------
@@ -252,7 +251,7 @@ abrir_preguntas :-
     new(BSep, label(bsep, ' ', font(helvetica, roman, 10))),
     send(D, append, BSep),
 
-    new(BDiag, button(diagnostico,
+    new(BDiag, button('  VER DIAGNOSTICO  ',
         and(
             message(@prolog, procesar,
                 Q1?selection, Q2?selection, Q3?selection, Q4?selection, Q5?selection,
@@ -260,14 +259,12 @@ abrir_preguntas :-
             message(D, destroy)
         )
     )),
-    send(BDiag, label, 'VER DIAGNOSTICO'),
-    new(BAtras, button(regresar,
+    new(BAtras, button('  REGRESAR  ',
         and(message(@prolog, main), message(D, destroy)))),
-    send(BAtras, label, 'REGRESAR'),
 
     send(D, append, BDiag),
     send(D, append, BAtras),
-    send(D, default_button, diagnostico),
+    send(D, default_button, 'VER DIAGNOSTICO'),
     send(D, open, point(150, 80)).
 
 % ------------------------------------------------
@@ -324,12 +321,10 @@ mostrar_resultado(Dx, P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
         'la evaluacion de un profesional de salud mental certificado.',
         font(helvetica, bold, 10))),
 
-    new(BNueva, button(nueva,
+    new(BNueva, button('  NUEVA EVALUACION  ',
         and(message(D, destroy), message(@prolog, abrir_preguntas)))),
-    send(BNueva, label, 'NUEVA EVALUACION'),
-    new(BSalir, button(salir,
+    new(BSalir, button('  SALIR  ',
         message(D, destroy))),
-    send(BSalir, label, 'SALIR'),
 
     send(D, append, LTit),
     send(D, append, LSep),
@@ -348,7 +343,7 @@ mostrar_resultado(Dx, P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
     send(D, append, LAviso2),
     send(D, append, BNueva),
     send(D, append, BSalir),
-    send(D, default_button, nueva),
+    send(D, default_button, 'NUEVA EVALUACION'),
     send(D, open, point(160, 100)).
 
 % ------------------------------------------------
