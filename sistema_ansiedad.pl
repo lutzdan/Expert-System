@@ -148,7 +148,9 @@ descripcion(ninguno,
 % ------------------------------------------------
 main :-
     new(D, dialog('SISTEMA EXPERTO - ORIENTACION EN PSICOLOGIA')),
-    send(D, size, size(580, 380)),
+    send(D, size, size(620, 420)),
+    send(D, gap, size(12,12)),
+    send(D, background, colour(white)),
 
     new(T1, label(t1,
         'SISTEMA EXPERTO DE PSICOLOGIA',
@@ -169,12 +171,10 @@ main :-
     new(I9, label(i9, ' * Trastorno de Estres Postraumatico (TEPT)', font(helvetica, roman, 10))),
     new(Sep3, label(sep3, ' ', font(helvetica, roman, 10))),
 
-    new(BIniciar, button(iniciar,
+    new(BIniciar, button('  INICIAR EVALUACION  ',
         message(@prolog, abrir_preguntas))),
-    send(BIniciar, label, 'INICIAR EVALUACION'),
-    new(BSalir, button(salir,
+    new(BSalir, button('  SALIR  ',
         message(D, destroy))),
-    send(BSalir, label, 'SALIR'),
 
     send(D, append, T1),
     send(D, append, T2),
@@ -192,7 +192,7 @@ main :-
     send(D, append, Sep3),
     send(D, append, BIniciar),
     send(D, append, BSalir),
-    send(D, default_button, iniciar),
+    send(D, default_button, BIniciar),
     send(D, open, point(220, 130)).
 
 % ------------------------------------------------
@@ -200,7 +200,9 @@ main :-
 % ------------------------------------------------
 abrir_preguntas :-
     new(D, dialog('EVALUACION DE SINTOMAS')),
-    send(D, size, size(680, 550)),
+    send(D, size, size(760, 620)),
+    send(D, gap, size(10,10)),
+    send(D, background, colour(white)),
 
     new(TT, label(tt,
         'Responda SI o NO a cada pregunta segun su experiencia reciente:',
@@ -252,7 +254,7 @@ abrir_preguntas :-
     new(BSep, label(bsep, ' ', font(helvetica, roman, 10))),
     send(D, append, BSep),
 
-    new(BDiag, button(diagnostico,
+    new(BDiag, button('  VER DIAGNOSTICO  ',
         and(
             message(@prolog, procesar,
                 Q1?selection, Q2?selection, Q3?selection, Q4?selection, Q5?selection,
@@ -260,14 +262,13 @@ abrir_preguntas :-
             message(D, destroy)
         )
     )),
-    send(BDiag, label, 'VER DIAGNOSTICO'),
-    new(BAtras, button(regresar,
-        and(message(@prolog, main), message(D, destroy)))),
-    send(BAtras, label, 'REGRESAR'),
+    new(BAtras, button('  REGRESAR  ',
+    and(message(D, destroy),
+        message(@prolog, main)))),
 
     send(D, append, BDiag),
     send(D, append, BAtras),
-    send(D, default_button, diagnostico),
+    send(D, default_button, BDiag),
     send(D, open, point(150, 80)).
 
 % ------------------------------------------------
@@ -287,7 +288,7 @@ procesar(P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
 %  DIALOGO DE RESULTADOS
 % ------------------------------------------------
 mostrar_resultado(Dx, P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
-    descripcion(Dx, Titulo, D1, D2, D3, D4, D5),
+    descripcion(Dx, Titulo, D1, D2, D3, D4),
     new(D, dialog('RESULTADO DEL DIAGNOSTICO')),
     send(D, size, size(680, 450)),
 
@@ -297,7 +298,6 @@ mostrar_resultado(Dx, P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
     new(LDesc2, label(ld2, D2,   font(helvetica, roman, 12))),
     new(LDesc3, label(ld3, D3,   font(helvetica, roman, 12))),
     new(LDesc4, label(ld4, D4,   font(helvetica, roman, 12))),
-    new(LDesc5, label(ld5, D5,   font(helvetica, roman, 12))),
     new(LSep2, label(ls2, '--------------------------------------------', font(helvetica, roman, 10))),
     new(LTit2, label(lt2, 'Respuestas registradas:', font(helvetica, bold, 11))),
 
@@ -324,12 +324,10 @@ mostrar_resultado(Dx, P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
         'la evaluacion de un profesional de salud mental certificado.',
         font(helvetica, bold, 10))),
 
-    new(BNueva, button(nueva,
+    new(BNueva, button('  NUEVA EVALUACION  ',
         and(message(D, destroy), message(@prolog, abrir_preguntas)))),
-    send(BNueva, label, 'NUEVA EVALUACION'),
-    new(BSalir, button(salir,
+    new(BSalir, button('  SALIR  ',
         message(D, destroy))),
-    send(BSalir, label, 'SALIR'),
 
     send(D, append, LTit),
     send(D, append, LSep),
@@ -337,7 +335,6 @@ mostrar_resultado(Dx, P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
     send(D, append, LDesc2),
     send(D, append, LDesc3),
     send(D, append, LDesc4),
-    send(D, append, LDesc5),
     send(D, append, LSep2),
     send(D, append, LTit2),
     send(D, append, LR1),
@@ -348,7 +345,7 @@ mostrar_resultado(Dx, P1,P2,P3,P4,P5,P6,P7,P8,P9,P10) :-
     send(D, append, LAviso2),
     send(D, append, BNueva),
     send(D, append, BSalir),
-    send(D, default_button, nueva),
+    send(D, default_button, BNueva),
     send(D, open, point(160, 100)).
 
 % ------------------------------------------------
